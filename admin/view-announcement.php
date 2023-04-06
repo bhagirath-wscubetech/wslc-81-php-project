@@ -5,8 +5,8 @@ $msg = "";
 $error = 0;
 
 $id = $_GET['id'];
-//delete query;
 if ($id != "") {
+    //delete query;
     $qry = "DELETE FROM announcements WHERE id = $id";
     // echo $qry;
     try {
