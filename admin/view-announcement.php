@@ -3,6 +3,21 @@ include "../app/connection.php";
 include "../app/helper.php";
 $msg = "";
 $error = 0;
+
+$id = $_GET['id'];
+//delete query;
+if ($id != "") {
+    $qry = "DELETE FROM announcements WHERE id = $id";
+    // echo $qry;
+    try {
+        $conn->query($qry);
+        $msg = "Data deleted successfully";
+    } catch (Exception $err) {
+        $msg = "Unable to delete the data";
+        $error = 1;
+    }
+}
+
 include "common/header.php";
 ?>
 <!-- Content Wrapper -->
@@ -46,7 +61,11 @@ include "common/header.php";
                             <td><?php echo $data['description'] ?></td>
                             <td><?php echo $data['created_at'] ?></td>
                             <td><?php echo $data['status'] ?></td>
-                            <td></td>
+                            <td>
+                                <a href="view-announcement.php?id=<?php echo $data['id'] ?>">
+                                    <button class="btn btn-danger">Delete</button>
+                                </a>
+                            </td>
                         </tr>
                     <?php
                     }
