@@ -6,15 +6,28 @@ $error = 0;
 
 $id = $_GET['id'];
 if ($id != "") {
-    //delete query;
-    $qry = "DELETE FROM announcements WHERE id = $id";
-    // echo $qry;
-    try {
-        $conn->query($qry);
-        $msg = "Data deleted successfully";
-    } catch (Exception $err) {
-        $msg = "Unable to delete the data";
-        $error = 1;
+    $status = $_GET['status'];
+    if ($status != "") {
+        //update query
+        $upd = "UPDATE announcements SET status=$status WHERE id = $id";
+        try {
+            $conn->query($upd);
+            $msg = "Status changed successfully";
+        } catch (Exception $err) {
+            $msg = "Unable to change the status";
+            $error = 1;
+        }
+    } else {
+        //delete query;
+        $qry = "DELETE FROM announcements WHERE id = $id";
+        // echo $qry;
+        try {
+            $conn->query($qry);
+            $msg = "Data deleted successfully";
+        } catch (Exception $err) {
+            $msg = "Unable to delete the data";
+            $error = 1;
+        }
     }
 }
 
@@ -60,7 +73,23 @@ include "common/header.php";
                             <td><?php echo $data['title'] ?></td>
                             <td><?php echo $data['description'] ?></td>
                             <td><?php echo $data['created_at'] ?></td>
-                            <td><?php echo $data['status'] ?></td>
+                            <td>
+                                <?php
+                                if ($data['status'] == 1) {
+                                ?>
+                                    <a href="view-announcement.php?id=<?php echo $data['id'] ?>&status=0">
+                                        <button class="btn btn-primary">Active</button>
+                                    </a>
+                                <?php
+                                } else {
+                                ?>
+                                    <a href="view-announcement.php?id=<?php echo $data['id'] ?>&status=1">
+                                        <button class="btn btn-warning">Inactive</button>
+                                    </a>
+                                <?php
+                                }
+                                ?>
+                            </td>
                             <td>
                                 <a href="view-announcement.php?id=<?php echo $data['id'] ?>">
                                     <button class="btn btn-danger">Delete</button>
