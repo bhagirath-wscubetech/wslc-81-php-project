@@ -1,4 +1,5 @@
 <?php
+$pageTitle = "Bakery - Home";
 include "common/header.php";
 ?>
 

@@ -94,6 +94,9 @@ include "common/header.php";
                                 <a href="view-announcement.php?id=<?php echo $data['id'] ?>">
                                     <button class="btn btn-danger">Delete</button>
                                 </a>
+                                <a href="add-announcement.php?id=<?php echo $data['id'] ?>">
+                                    <button class="btn btn-secondary">Edit</button>
+                                </a>
                             </td>
                         </tr>
                     <?php
