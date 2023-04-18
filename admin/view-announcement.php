@@ -6,27 +6,26 @@ $error = 0;
 
 $id = $_GET['id'];
 if ($id != "") {
-    $status = $_GET['status'];
-    if ($status != "") {
-        //update query
-        $upd = "UPDATE announcements SET status=$status WHERE id = $id";
+    $newStatus = $_GET['newstatus'];
+    if ($newStatus != "") {
+        $upd = "UPDATE announcements SET status = $newStatus WHERE id = $id";
         try {
             $conn->query($upd);
             $msg = "Status changed successfully";
+            $error = 0;
         } catch (Exception $err) {
             $msg = "Unable to change the status";
             $error = 1;
         }
     } else {
-        //delete query;
-        $qry = "DELETE FROM announcements WHERE id = $id";
-        // echo $qry;
+        $del = "DELETE FROM announcements WHERE id = $id";
         try {
-            $conn->query($qry);
-            $msg = "Data deleted successfully";
+            $conn->query($del);
+            $msg = "Data deleted";
+            $error = 0; // no error
         } catch (Exception $err) {
             $msg = "Unable to delete the data";
-            $error = 1;
+            $error = 1; // some error is there
         }
     }
 }
@@ -46,9 +45,6 @@ include "common/header.php";
         </div>
         <div class="card-body">
             <?php
-            // SELECT <columns> FROM <table_name> ORDER BY <col_name> DESC|ASC;
-            // * -> all columns
-            // "SELECT id,title FROM annoucements";
             $sel = "SELECT * FROM announcements ORDER BY id DESC";
             $result = $conn->query($sel);
             ?>
@@ -77,13 +73,15 @@ include "common/header.php";
                                 <?php
                                 if ($data['status'] == 1) {
                                 ?>
-                                    <a href="view-announcement.php?id=<?php echo $data['id'] ?>&status=0">
+                                    <!-- active -->
+                                    <a href="view-announcement.php?id=<?php echo $data['id'] ?>&newstatus=0">
                                         <button class="btn btn-primary">Active</button>
                                     </a>
                                 <?php
                                 } else {
                                 ?>
-                                    <a href="view-announcement.php?id=<?php echo $data['id'] ?>&status=1">
+                                    <!-- inactive -->
+                                    <a href="view-announcement.php?id=<?php echo $data['id'] ?>&newstatus=1">
                                         <button class="btn btn-warning">Inactive</button>
                                     </a>
                                 <?php
@@ -94,8 +92,11 @@ include "common/header.php";
                                 <a href="view-announcement.php?id=<?php echo $data['id'] ?>">
                                     <button class="btn btn-danger">Delete</button>
                                 </a>
+                                <!-- edit button -->
                                 <a href="add-announcement.php?id=<?php echo $data['id'] ?>">
-                                    <button class="btn btn-secondary">Edit</button>
+                                    <button class="btn btn-secondary">
+                                        Edit
+                                    </button>
                                 </a>
                             </td>
                         </tr>

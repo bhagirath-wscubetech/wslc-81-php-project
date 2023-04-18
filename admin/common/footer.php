@@ -46,7 +46,11 @@
  <script src="js/jquery-easing/jquery.easing.min.js"></script>
  <!-- Custom scripts for all pages-->
  <script src="js/sb-admin-2.min.js"></script>
-
+ <script src="https://cdn.ckeditor.com/ckeditor5/37.0.1/classic/ckeditor.js"></script>
+ <script src="js/dropify.js"></script>
+ <script>
+     $('.dropify').dropify();
+ </script>
  </body>
 
  </html>

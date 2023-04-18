@@ -25,8 +25,9 @@ include "common/header.php";
     <div class="container">
         <?php
         $sel = "SELECT * FROM announcements WHERE status = 1";
+        // clause - WHERE <condition>
+        // column -> condition
         $result = $conn->query($sel);
-        // while ($data = $result->fetch_assoc()) {
         while ($data = $result->fetch_assoc()) :
         ?>
             <div id="pills-tabContent" class="tab-content absolute">
