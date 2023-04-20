@@ -1,4 +1,6 @@
 <?php
+include "app/connection.php";
+include "app/helper.php";
 $pageTitle = "Bakery - Home";
 include "common/header.php";
 ?>
@@ -62,59 +64,38 @@ include "common/header.php";
                 </p>
             </div>
         </div>
-        <div class="row ">
-            <div class="col-lg-3 col-md-6 ">
-                <div class="single-cat-item ">
-                    <div class="thumb ">
-                        <img class="img-fluid " src="img/c1.jpg " alt=" ">
+        <div class="row">
+            <?php
+            $selCat = "SELECT * FROM categories WHERE status = 1";
+            $resCat = $conn->query($selCat);
+            $totalRows = $resCat->num_rows;
+            while ($catData = $resCat->fetch_assoc()) {
+            ?>
+                <div class="col-lg-3 col-md-6 ">
+                    <div class="single-cat-item ">
+                        <div class="thumb ">
+                            <img class="img-fluid " src="img/category/<?php echo $catData['image'] ?> " alt=" ">
+                        </div>
+                        <a href="menu.php?cid=<?php echo $catData['id'] ?>">
+                            <h4><?php echo $catData['name'] ?></h4>
+                        </a>
+                        <p>
+                            <?php echo $catData['description'] ?>
+                        </p>
                     </div>
-                    <a href="# ">
-                        <h4>Pizza</h4>
-                    </a>
-                    <p>
-                        inappropriate behavior is often laughed off as “boys will be.
-                    </p>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 ">
-                <div class="single-cat-item ">
-                    <div class="thumb ">
-                        <img class="img-fluid " src="img/c2.jpg " alt=" ">
-                    </div>
-                    <a href="# ">
-                        <h4>Bread</h4>
-                    </a>
-                    <p>
-                        inappropriate behavior is often laughed off as “boys will be.
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 ">
-                <div class="single-cat-item ">
-                    <div class="thumb ">
-                        <img class="img-fluid " src="img/c3.jpg " alt=" ">
-                    </div>
-                    <a href="# ">
-                        <h4>Burgers</h4>
-                    </a>
-                    <p>
-                        inappropriate behavior is often laughed off as “boys will be.
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 ">
-                <div class="single-cat-item ">
-                    <div class="thumb ">
-                        <img class="img-fluid " src="img/c4.jpg " alt=" ">
-                    </div>
-                    <a href="# ">
-                        <h4>Chicken</h4>
-                    </a>
-                    <p>
-                        inappropriate behavior is often laughed off as “boys will be.
-                    </p>
-                </div>
-            </div>
+                <?php
+            }
+            if ($totalRows < 4) {
+                $remaining = 4 - $totalRows;
+                // echo $remaining;
+                for ($i = 1; $i <= $remaining; $i++) {
+                ?>
+                    <div class="col-lg-3 col-md-6 "></div>
+            <?php
+                }
+            }
+            ?>
             <a class="primary-btn mx-auto mt-80 " href="# ">View Full Menu</a>
         </div>
     </div>
@@ -418,6 +399,6 @@ include "common/header.php";
 </section>
 <!-- end blog Area -->
 
-<?php 
-    include "common/footer.php"
+<?php
+include "common/footer.php"
 ?>

@@ -1,4 +1,7 @@
 <?php
+include "app/connection.php";
+$pageTitle = "Menu List";
+$cid = $_GET['cid'];
 include "common/header.php";
 ?>
 
@@ -24,18 +27,19 @@ include "common/header.php";
 		<div class="row">
 			<div class="menu-cat mx-auto">
 				<ul class="nav nav-pills" id="pills-tab" role="tablist">
-					<li class="nav-item">
-						<a class="nav-link active" id="pizza-tab" data-toggle="pill" href="#pizza" role="tab" aria-controls="pizza" aria-selected="true">Pizza</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" id="pills-bread-tab" data-toggle="pill" href="#pills-bread" role="tab" aria-controls="pills-bread" aria-selected="false">Breads</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" id="pills-burger-tab" data-toggle="pill" href="#pills-burger" role="tab" aria-controls="pills-burger" aria-selected="false">Burgers</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" id="pills-chicken-tab" data-toggle="pill" href="#pills-chicken" role="tab" aria-controls="pills-chicken" aria-selected="false">Chicken</a>
-					</li>
+					<?php
+					$selCat = "SELECT * FROM categories WHERE status = 1";
+					$resCat = $conn->query($selCat);
+					$totalRows = $resCat->num_rows;
+					while ($catData = $resCat->fetch_assoc()) {
+					?>
+						<li class="nav-item">
+							<!-- active -->
+							<a class="nav-link <?php echo $cid == $catData['id'] ? 'active' : '' ?>" id="pizza-tab" data-toggle="pill" href="#pizza" role="tab" aria-controls="pizza" aria-selected="true"><?php echo $catData['name']; ?> </a>
+						</li>
+					<?php
+					}
+					?>
 				</ul>
 			</div>
 

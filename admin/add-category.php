@@ -16,9 +16,14 @@ if (isset($_POST['save'])) {
         if (move_uploaded_file($tmpPath, $destination) == true) {
             $qry = "INSERT INTO categories SET name = '$name', description='$description',image='$imageName'";
             $conn->query($qry);
+            header('LOCATION:view-category.php');
         } else {
+            $msg = "Unable to upload the image";
+            $error = 1;
         }
     } catch (Exception $err) {
+        $msg = "Internal server error";
+        $error = 1;
     }
 }
 
