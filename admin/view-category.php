@@ -18,9 +18,13 @@ if ($id != "") {
             $error = 1;
         }
     } else {
+        $imgName = $_GET['img'];
         $del = "DELETE FROM categories WHERE id = $id";
         try {
-            $conn->query($del);
+            if ($conn->query($del) == true) {
+                // delete the image
+                unlink("../img/category/$imgName");
+            }
             $msg = "Data deleted";
             $error = 0; // no error
         } catch (Exception $err) {
@@ -91,7 +95,7 @@ include "common/header.php";
                                 ?>
                             </td>
                             <td>
-                                <a href="view-category.php?id=<?php echo $data['id'] ?>"><button class="btn btn-danger">Delete</button></a>
+                                <a href="view-category.php?id=<?php echo $data['id'] ?>&img=<?php echo $data['image'] ?>"><button class="btn btn-danger">Delete</button></a>
                                 <!-- edit button -->
                                 <a href="add-category.php?id=<?php echo $data['id'] ?>"><button class="btn btn-secondary">Edit</button></a>
                             </td>
