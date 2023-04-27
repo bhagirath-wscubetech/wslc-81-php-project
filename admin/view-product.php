@@ -56,9 +56,11 @@ include "common/header.php";
                 <thead>
                     <tr>
                         <th>Sr</th>
-                        <th>Title</th>
+                        <th>Name</th>
+                        <th>Category</th>
                         <th>Description</th>
                         <th>Image</th>
+                        <th>Price</th>
                         <th>Created At</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -72,9 +74,14 @@ include "common/header.php";
                         <tr>
                             <td><?php echo $i++; ?></td>
                             <td><?php echo $data['name'] ?></td>
+                            <td><?php echo $data['category_id'] ?></td>
                             <td><?php echo $data['description'] ?></td>
                             <td>
                                 <img src="../img/product/<?php echo $data['image'] ?>" alt="" width="100">
+                            </td>
+                            <td>
+                                Original: <?php echo $data['original_price'] ?> <br>
+                                Discounted: <?php echo $data['discounted_price'] ?>
                             </td>
                             <td><?php echo $data['created_at'] ?></td>
                             <td>

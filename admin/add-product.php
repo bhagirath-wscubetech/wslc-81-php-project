@@ -23,12 +23,13 @@ if (isset($_POST['save'])) {
             if ($image != "") {
                 if (move_uploaded_file($tmpPath, $destination) == true) {
                     $oldImageName = $_POST['img_name'];
-                    unlink("../img/category/$oldImageName");
+                    unlink("../img/product/$oldImageName");
                 }
             }
-            $qry = "UPDATE products SET name = '$name', description='$description',image='$imageName' WHERE id = $id";
+            $qry = "UPDATE products SET name = '$name', description='$description',image='$imageName', 
+            original_price = $o_price, discounted_price = $d_price, category_id = $category_id WHERE product_id = $id";
             $conn->query($qry);
-            header('LOCATION:view-category.php');
+            header('LOCATION:view-product.php');
         } else {
             if (move_uploaded_file($tmpPath, $destination) == true) {
                 $qry = "INSERT INTO products 
@@ -93,19 +94,22 @@ include "common/header.php";
                             <?php
                             while ($catData = $resCat->fetch_assoc()) {
                             ?>
-                                <option value="<?php echo $catData['id'] ?>"><?php echo $catData['name'] ?></option>
+                                <option value="<?php echo $catData['id'] ?>" <?php echo $catData['id'] ==  $data['category_id'] ? 'selected' : '' ?>>
+                                    <?php echo $catData['name'] ?>
+                                </option>
                             <?php
                             }
                             ?>
                         </select>
                     </div>
+                    <input type="hidden" name="img_name" value="<?php echo $data['image'] ?>">
                     <div class="col-4 my-3">
                         <label for="">Original Price</label>
-                        <input type="number" name="o_price" id="" min="1" max="9999.99" step="0.01" class="form-control">
+                        <input type="number" name="o_price" min="1" max="9999.99" step="0.01" class="form-control" id="o_price" value="<?php echo $data['original_price'] ?>">
                     </div>
                     <div class="col-4 my-3">
                         <label for="">Discounted Price</label>
-                        <input type="number" name="d_price" id="" min="1" max="9998.99" step="0.01" class="form-control">
+                        <input type="number" name="d_price" id="d_price" min="1" step="0.01" class="form-control" <?php echo $id == "" ? "disabled" : "" ?> placeholder="Please enter original price first" max="<?php echo $data['original_price'] - 1 ?>" value="<?php echo $data['discounted_price'] ?>">
                     </div>
                     <div class="col-12 my-3">
                         <label for="">Image</label>
@@ -135,4 +139,18 @@ include "common/header.php";
         .catch(error => {
             console.error(error);
         });
+</script>
+
+<script>
+    $("#o_price").change(
+        function() {
+            var oPrice = $(this).val();
+            if (oPrice != "" && oPrice > 1) {
+                $("#d_price").prop('disabled', false);
+                $("#d_price").attr("max", oPrice - 1);
+            } else {
+                $("#d_price").prop('disabled', true);
+            }
+        }
+    )
 </script>

@@ -60,6 +60,7 @@ include "common/header.php";
 							<div class="col-lg-9">
 								<a href="#">
 									<h4><?php echo $proData['name'] ?></h4>
+									<!-- CTRL + SHIFT + $ -->
 								</a>
 								<p>
 									<?php echo $proData['description'] ?>
