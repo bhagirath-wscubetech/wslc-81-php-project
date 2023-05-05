@@ -3,6 +3,7 @@ include "app/connection.php";
 $pageTitle = "Menu List";
 $cid = $_GET['cid'];
 include "common/header.php";
+
 ?>
 
 <!-- start banner Area -->

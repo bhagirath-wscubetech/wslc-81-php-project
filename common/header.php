@@ -15,7 +15,7 @@
         <!-- meta character set -->
         <meta charset="UTF-8">
         <!-- Site Title -->
-        <title><?php echo $pageTitle;?></title>
+        <title><?php echo $pageTitle; ?></title>
 
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
         <!--
@@ -79,8 +79,25 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="elements.php">Elements</a></li>
                             <li><a href="contact.php">Contact</a></li>
+                            <?php
+                            if (isset($_SESSION['user_id'])) {
+                            ?>
+                                <li>
+                                    <a href="profile.php">
+                                        <?php echo $_SESSION['user_name'] ?>
+                                    </a>
+                                </li>
+                                <li><a href="logout.php">Logout</a></li>
+                            <?php
+                            } else {
+                            ?>
+                                <li><a href="signup.php">Sign Up</a></li>
+                                <li><a href="login.php">Login</a></li>
+                            <?php
+                            }
+                            ?>
+
                         </ul>
                     </nav>
                     <!-- #nav-menu-container -->

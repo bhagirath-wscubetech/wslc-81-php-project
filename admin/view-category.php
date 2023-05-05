@@ -33,7 +33,6 @@ if ($id != "") {
         }
     }
 }
-
 include "common/header.php";
 ?>
 <!-- Content Wrapper -->
@@ -95,7 +94,9 @@ include "common/header.php";
                                 ?>
                             </td>
                             <td>
-                                <a href="view-category.php?id=<?php echo $data['id'] ?>&img=<?php echo $data['image'] ?>"><button class="btn btn-danger">Delete</button></a>
+                                <!-- <a href="view-category.php?id=<?php echo $data['id'] ?>&img=<?php echo $data['image'] ?>"> -->
+                                <button class="btn btn-danger" onclick="delImage(<?php echo $data['id'] ?>)">Delete</button>
+                                <!-- </a> -->
                                 <!-- edit button -->
                                 <a href="add-category.php?id=<?php echo $data['id'] ?>"><button class="btn btn-secondary">Edit</button></a>
                             </td>
@@ -113,3 +114,23 @@ include "common/header.php";
 </div>
 <!-- End of Main Content -->
 <?php include "common/footer.php"; ?>
+
+<script>
+    function delImage(id) {
+        // console.log(id);
+        swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this image!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    window.location.href = "view-category.php?id=" + id;
+                } else {
+                    swal("Your imaginary file is safe!");
+                }
+            });
+    }
+</script>

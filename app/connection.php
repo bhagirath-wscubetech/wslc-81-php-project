@@ -1,6 +1,8 @@
 <?php
 // connection to the database
 error_reporting(0); // not show me the warning message
+session_start();
+
 $username = "root";
 $password = "";
 $host = "localhost";

@@ -1,4 +1,6 @@
 <?php
+include "app/connection.php";
+include "app/helper.php";
 $pageTitle = "Bakery - About";
 include "common/header.php";
 ?>
