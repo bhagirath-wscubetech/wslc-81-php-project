@@ -67,6 +67,24 @@
 <script src="js/jquery.nice-select.min.js "></script>
 <script src="js/mail-script.js "></script>
 <script src="js/main.js "></script>
+<script>
+    function showSnackbar(status, message) {
+        // Get the snackbar DIV
+        var x = document.getElementById("snackbar");
+
+        // Add the "show" class to DIV
+        if (status == 1) {
+            x.className = "bg-success show";
+        } else {
+            x.className = "bg-danger show";
+        }
+        x.innerText = message;
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function() {
+            x.className = x.className.replace("show", "");
+        }, 3000);
+    }
+</script>
 </body>
 
 </html>

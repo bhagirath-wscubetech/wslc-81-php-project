@@ -3,7 +3,7 @@ include "app/connection.php";
 $pageTitle = "Menu List";
 $cid = $_GET['cid'];
 include "common/header.php";
-
+error_reporting(E_ALL);
 ?>
 
 <!-- start banner Area -->
@@ -36,7 +36,7 @@ include "common/header.php";
 					?>
 						<li class="nav-item">
 							<!-- active -->
-							<a class="nav-link <?php echo $cid == $catData['id'] ? 'active' : '' ?>" href="menu.php?cid=<?php echo $catData['id'] ?>"><?php echo $catData['name']; ?> </a>
+							<span onclick="getProducts(this)" data-cid="<?php echo $catData['id'] ?>" class="nav-link" style="cursor: pointer;"><?php echo $catData['name']; ?> </span>
 						</li>
 					<?php
 					}
@@ -46,37 +46,44 @@ include "common/header.php";
 
 		</div>
 		<?php
-		$proSel = "SELECT * FROM products WHERE category_id = $cid AND status = 1";
-		$proRes = $conn->query($proSel);
+		if ($cid != "") {
+			$proSel = "SELECT * FROM products WHERE category_id = $cid AND status = 1";
+			$proRes = $conn->query($proSel);
 		?>
-		<div id="pills-tabContent" class="tab-content absolute">
-			<?php
-			if ($proRes->num_rows == 0) {
-				echo "<h2 class='text-center'> No Product Found </h2>";
-			} else {
-				while ($proData = $proRes->fetch_assoc()) {
-			?>
-					<div class="tab-pane fade show active" id="pizza" role="tabpanel" aria-labelledby="pizza-tab">
-						<div class="single-menu-list row justify-content-between align-items-center">
-							<div class="col-lg-9">
-								<a href="#">
-									<h4><?php echo $proData['name'] ?></h4>
+			<div id="pills-tabContent" class="tab-content absolute">
+				<?php
+				if ($proRes->num_rows == 0) {
+					echo "<h2 class='text-center'> No Product Found </h2>";
+				} else {
+					while ($proData = $proRes->fetch_assoc()) {
+				?>
+						<div class="tab-pane fade show active" id="pizza" role="tabpanel" aria-labelledby="pizza-tab">
+							<div class="single-menu-list row justify-content-between align-items-center">
+								<div class="col-lg-9">
+									<!-- <a href="product-details.php?pid=<?php echo $proData['product_id'] ?>"> -->
+									<h4><?php echo $proData['product_name'] ?></h4>
 									<!-- CTRL + SHIFT + $ -->
-								</a>
-								<p>
-									<?php echo $proData['description'] ?>
-								</p>
-							</div>
-							<div class="col-lg-3 flex-row d-flex price-size">
-								<img src="img/product/<?php echo $proData['image'] ?>" width="150" alt="">
+									<!-- </a> -->
+									<p>
+										<?php echo $proData['description'] ?>
+									</p>
+								</div>
+								<div class="col-lg-3 flex-row d-flex price-size">
+									<img src="img/product/<?php echo $proData['image'] ?>" width="150" alt="">
+								</div>
 							</div>
 						</div>
-					</div>
-			<?php
+				<?php
+					}
 				}
+			} else {
+				?>
+				<div id="pills-tabContent" class="tab-content absolute">
+				</div>
+			<?php
 			}
 			?>
-		</div>
+			</div>
 	</div>
 </section>
 <!-- End menu-list Area -->
@@ -109,3 +116,22 @@ include "common/header.php";
 <?php
 include "common/footer.php";
 ?>
+<script>
+	function getProducts(item) {
+		// console.log($(item).data('cid'));
+		var cId = $(item).data('cid');
+		$.ajax({
+			type: "get",
+			data: {
+				cid: cId
+			},
+			url: "category_product.ajax.php",
+			beforeSend: function() {
+				$("#pills-tabContent").html("<h2 class='text-center'> Loading </h2>");
+			},
+			success: function(resp) {
+				$("#pills-tabContent").html(resp);
+			}
+		})
+	}
+</script>

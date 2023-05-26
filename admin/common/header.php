@@ -1,7 +1,7 @@
 <?php
-if (!isset($_COOKIE['admin_id'])) {
-    header("LOCATION:login.php");
-}
+// if (!isset($_COOKIE['admin_id'])) {
+//     header("LOCATION:login.php");
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,6 +65,18 @@ if (!isset($_COOKIE['admin_id'])) {
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="add-announcement.php">Add</a>
                         <a class="collapse-item" href="view-announcement.php">View</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCountry" aria-expanded="true" aria-controls="collapseCountry">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Country</span>
+                </a>
+                <div id="collapseCountry" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="add-country.php">Add</a>
+                        <a class="collapse-item" href="view-country.php">View</a>
                     </div>
                 </div>
             </li>

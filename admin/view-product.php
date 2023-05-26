@@ -49,7 +49,7 @@ include "common/header.php";
         </div>
         <div class="card-body">
             <?php
-            $sel = "SELECT * FROM products ORDER BY product_id DESC";
+            $sel = "SELECT * FROM products LEFT JOIN categories ON products.category_id = categories.id ORDER BY products.product_id DESC";
             $result = $conn->query($sel);
             ?>
             <table class="table">
@@ -73,8 +73,8 @@ include "common/header.php";
                     ?>
                         <tr>
                             <td><?php echo $i++; ?></td>
+                            <td><?php echo $data['product_name'] ?></td>
                             <td><?php echo $data['name'] ?></td>
-                            <td><?php echo $data['category_id'] ?></td>
                             <td><?php echo $data['description'] ?></td>
                             <td>
                                 <img src="../img/product/<?php echo $data['image'] ?>" alt="" width="100">

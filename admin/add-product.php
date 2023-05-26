@@ -26,14 +26,14 @@ if (isset($_POST['save'])) {
                     unlink("../img/product/$oldImageName");
                 }
             }
-            $qry = "UPDATE products SET name = '$name', description='$description',image='$imageName', 
+            $qry = "UPDATE products SET product_name = '$name', description='$description',image='$imageName', 
             original_price = $o_price, discounted_price = $d_price, category_id = $category_id WHERE product_id = $id";
             $conn->query($qry);
             header('LOCATION:view-product.php');
         } else {
             if (move_uploaded_file($tmpPath, $destination) == true) {
                 $qry = "INSERT INTO products 
-                SET name = '$name', description='$description',image='$imageName', 
+                SET product_name = '$name', description='$description',image='$imageName', 
                 original_price = $o_price, discounted_price = $d_price, category_id = $category_id
                 ";
                 $conn->query($qry);
